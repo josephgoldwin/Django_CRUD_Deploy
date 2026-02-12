@@ -1,0 +1,65 @@
+{% extends 'index.html' %} {% block content %}
+<div class="container-fluid" style="margin-top:50px;">
+    <div class="col-md-offset-3 col-md-12">
+        <h3 class="page-header text-primary text-center text-nowrap">
+            <i class="fa fa-database me-2"></i> Django - Mysql Database (CRUD)
+        </h3>
+        <div class="col-md-6 mx-left">
+            <table class="table">
+                <tr>
+                    <th><input type="text" name="search" id="search" placeholder="Search" class="form-control"></th>
+                    <th><a class="btn btn-primary btn-block" href="insert/">Search</a></th>
+                </tr>
+            </table>
+
+        </div>
+        <a class="btn btn-success w-100" href="insert/">Insert</a><br> {% if messages %} {% for message in messages %} {% if message.tags == 'error' %}
+        <div class="alert alert-danger mt-3">{{ message }}</div>
+        {% else %}
+        <div class="alert alert-{{ message.tags }} mt-3">{{ message }}</div>
+        {% endif %} {% endfor %} {% endif %}
+
+        <table class="table table-bordered table-striped mt-3">
+            <thead class="table-dark">
+                <tr class="text-center">
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Address</th>
+                    <th>Contact</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="mytable">
+                {% for i in data %}
+                <tr class="text-center">
+                    <td>{{ i.id }}</td>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.age }}</td>
+                    <td>{{ i.address }}</td>
+                    <td>{{ i.contact }}</td>
+                    <td>{{ i.email }}</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="{% url 'update' i.id %}">Update</a>
+                        <a class="btn btn-danger btn-sm" href="{% url 'delete' i.id %}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        $('#search').keyup(function() {
+            var value = $(this).val().toLowerCase();
+            $('#mytable tr').filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            })
+
+        })
+    });
+</script>
+{% endblock %}

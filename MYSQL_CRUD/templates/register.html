@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container-fluid mt-5">
+    <div class="row">
+
+        <!-- Left space -->
+        <div class="col-md-4"></div>
+
+        <!-- Center content -->
+        <div class="col-md-4">
+            <h2 class="text-primary text-center text-nowrap bg-danger p-3 mb-4 rounded">
+                <i class="fa fa-user-plus me-2"></i> Register Form
+            </h2>
+
+            <!-- INSERT FORM -->
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary w-100">Submit</button>
+            </form>
+
+        </div>
+
+        <!-- Right space -->
+        <div class="col-md-4"></div>
+
+    </div>
+</div>
+{% endblock %}
